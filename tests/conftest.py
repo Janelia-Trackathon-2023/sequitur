@@ -16,6 +16,7 @@ EDGES = {
     "target": [1, 2, 3, 4, 5, 6, 6, 7],
 }
 
+
 TRACKS = {
     "id": [0, 1, 2, 3],
     "begin": [0, 2, 3, 6],
@@ -39,5 +40,3 @@ def test_edges() -> dict[str, list]:
 def test_tracks() -> dict[str, list]:
     """Return the tracks defined in the graph."""
     return TRACKS
-
-
