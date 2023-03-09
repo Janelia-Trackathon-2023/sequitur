@@ -1,29 +1,31 @@
 import pytest
 
+from sequitur.format import Subgroup
+
 
 NODES = {
-    "nid": [0, 1, 2, 3, 4, 5, 6, 7],
-    "x": [0.0, 1.0, 2.0, 2.0, 3.0, 3.0, 4.0, 5.0],
-    "y": [1.0, 1.0, 2.0, 0.0, 2.0, 0.0, 1.0, 1.0],
-    "z": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-    "t": [0, 1, 2, 2, 3, 3, 4, 5],
-    "score": [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+    Subgroup.NODES_ID.value: [0, 1, 2, 3, 4, 5, 6, 7],
+    Subgroup.NODES_X.value: [0.0, 1.0, 2.0, 2.0, 3.0, 3.0, 4.0, 5.0],
+    Subgroup.NODES_Y.value: [1.0, 1.0, 2.0, 0.0, 2.0, 0.0, 1.0, 1.0],
+    Subgroup.NODES_Z.value: [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+    Subgroup.NODES_T.value: [0, 1, 2, 2, 3, 3, 4, 5],
+    Subgroup.NODES_SCORE.value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
 }
 
 
 EDGES = {
-    "eid": [0, 1, 2, 3, 4, 5, 6, 7],
-    "source": [0, 1, 1, 2, 3, 4, 5, 6],
-    "target": [1, 2, 3, 4, 5, 6, 6, 7],
-    "score": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
-    "solution": [1, 0, 0, 1, 1, 0, 0, 1],
+    Subgroup.EDGES_ID.value: [0, 1, 2, 3, 4, 5, 6, 7],
+    Subgroup.EDGES_SOURCE.value: [0, 1, 1, 2, 3, 4, 5, 6],
+    Subgroup.EDGES_TARGET.value: [1, 2, 3, 4, 5, 6, 6, 7],
+    Subgroup.EDGES_SCORE.value: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
+    Subgroup.EDGES_SOLUTION.value: [1, 0, 0, 1, 1, 0, 0, 1],
 }
 
 
 TRACKS = {
-    "tid": [0, 1, 2, 3],
-    "begin": [0, 2, 3, 6],
-    "end": [1, 4, 5, 7],
+    Subgroup.TRACKS_ID.value: [0, 1, 2, 3],
+    Subgroup.TRACKS_BEGIN.value: [0, 2, 3, 6],
+    Subgroup.TRACKS_END.value: [1, 4, 5, 7],
 }
 
 
