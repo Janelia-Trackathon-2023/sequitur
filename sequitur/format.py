@@ -19,12 +19,14 @@ class Subgroup(Enum):
     # keep x and y explicit to avoid xy vs yx
     NODES_X = 'x'
     NODES_Y = 'y'
-
     NODES_Z = 'z'
+    NODES_SCORE = 'score'
 
     EDGES_ID = 'eid'
     EDGES_SOURCE = 'source'
     EDGES_TARGET = 'target'
+    EDGES_SCORE = 'score'
+    EDGES_SOLUTION = 'solution'
 
     TRACKS_ID = 'tid'
     TRACKS_BEGIN = 'begin'
@@ -64,6 +66,7 @@ class Subgroup(Enum):
             Subgroup.NODES_Z.value,
             Subgroup.NODES_X.value,
             Subgroup.NODES_Y.value,
+            Subgroup.NODES_SCORE.value,
         ]
 
     @staticmethod
@@ -72,4 +75,6 @@ class Subgroup(Enum):
             Subgroup.EDGES_ID.value,
             Subgroup.EDGES_SOURCE.value,
             Subgroup.EDGES_TARGET.value,
+            Subgroup.EDGES_SCORE.value,
+            Subgroup.EDGES_SOLUTION.value,
         ]
