@@ -8,6 +8,11 @@ from sequitur.writer import write
 
 
 @pytest.fixture
+def my_path(tmpdir):
+    return Path(tmpdir, 'myzarr.zarr')
+
+
+@pytest.fixture
 def minimum_example():
     return {
         Subgroup.NODES_ID.value: np.array([0]),
@@ -20,11 +25,13 @@ def minimum_example():
     }
 
 
-def test_writer(tmpdir, minimum_example):
-    path = Path(tmpdir, 'myzarr.zarr')
-
+def test_writer(my_path, minimum_example):
     # write zarr to disk
-    write(path, minimum_example)
+    write(my_path, minimum_example)
 
     # simply assert existence
-    assert path.exists()
+    assert my_path.exists()
+
+
+def test_write_read(my_path, minimum_example):
+    pass
