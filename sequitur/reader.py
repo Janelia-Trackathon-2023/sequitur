@@ -11,4 +11,4 @@ def read_zarr(path: Union[str, Path]):
     return zarr.open(path)
 
 def read_parquet(path: Union[str, Path], **kwargs):
-    pq.read_table(path, **kwargs)
+    return pq.read_table(path, **kwargs)

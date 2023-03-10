@@ -1,13 +1,10 @@
 from pathlib import Path
-from typing import Union, Tuple
-import warnings
+from typing import Union, List
 
 import zarr
 from pandas import DataFrame
 import pyarrow as pa
 import pyarrow.parquet as pq
-
-from .format import Group, Subgroup
 
 # TODO take image as input
 def write_zarr(path: Union[str, Path], data: dict) -> None:
@@ -20,6 +17,10 @@ def write_zarr(path: Union[str, Path], data: dict) -> None:
     root = zarr.open(path, mode='w')
 
     # TODO write image
+
+
+def write(path: Union[str, Path], list_dataframes: List[DataFrame]):
+    pass
 
 
 def write_parquet(path: Union[str, Path], dataframe: DataFrame):
