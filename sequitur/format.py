@@ -20,12 +20,12 @@ class Subgroup(Enum):
     NODES_X = 'x'
     NODES_Y = 'y'
     NODES_Z = 'z'
-    NODES_SCORE = 'score'
+    NODES_SCORE = 'nscore'
 
     EDGES_ID = 'eid'
     EDGES_SOURCE = 'source'
     EDGES_TARGET = 'target'
-    EDGES_SCORE = 'score'
+    EDGES_SCORE = 'escore'
     EDGES_SOLUTION = 'solution'
 
     TRACKS_ID = 'tid'
