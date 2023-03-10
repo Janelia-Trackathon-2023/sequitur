@@ -91,3 +91,4 @@ def test_read_write_nodes_edges(tmpdir, simple_nodes, simple_edges):
     # compare edges
     read_edges = read_parquet(Path(tmpdir, 'edges.parquet'))
     assert read_edges.to_pandas().equals(pd.DataFrame(simple_edges))
+
