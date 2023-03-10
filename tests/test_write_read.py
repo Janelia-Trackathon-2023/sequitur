@@ -4,8 +4,8 @@ import numpy as np
 import pytest
 
 from sequitur.format import Subgroup, Group
-from sequitur.writer import write
-from sequitur.reader import read
+from sequitur.writer import write_zarr
+from sequitur.reader import read_zarr
 
 
 @pytest.fixture
@@ -72,7 +72,7 @@ def simple_tracks() -> dict[str, list]:
 
 def test_writer(my_path, minimum_example):
     # write zarr to disk
-    write(my_path, minimum_example)
+    write_zarr(my_path, minimum_example)
 
     # simply assert existence
     assert my_path.exists()
@@ -80,10 +80,10 @@ def test_writer(my_path, minimum_example):
 
 def test_read_mandatory(my_path, minimum_example):
     # write zarr to disk
-    write(my_path, minimum_example)
+    write_zarr(my_path, minimum_example)
 
     # read it again
-    mydata = read(my_path)
+    mydata = read_zarr(my_path)
 
     # compare data
     nodes_id = f'{Group.NODES.value}/{Subgroup.NODES_ID.value}'
@@ -108,10 +108,10 @@ def test_read_simple_example(my_path, simple_nodes, simple_edges, simple_tracks)
     data_ref.update(simple_tracks)
 
     # write zarr to disk
-    write(my_path, data_ref)
+    write_zarr(my_path, data_ref)
 
     # read it again
-    data_read = read(my_path)
+    data_read = read_zarr(my_path)
 
     # zarr keys
     nodes_id = f'{Group.NODES.value}/{Subgroup.NODES_ID.value}'
@@ -135,6 +135,7 @@ def test_read_simple_example(my_path, simple_nodes, simple_edges, simple_tracks)
     # compare dictionaries
     assert (data_read[nodes_id][:] == NODES[Subgroup.NODES_ID.value]).all()
     assert (data_read[nodes_t][:] == NODES[Subgroup.NODES_T.value]).all()
+    
+    
     # TODO continue
-
     pass

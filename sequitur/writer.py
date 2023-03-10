@@ -3,10 +3,13 @@ from typing import Union, Tuple
 import warnings
 
 import zarr
+from pandas import DataFrame
+import pyarrow as pa
+import pyarrow.parquet as pq
 
 from .format import Group, Subgroup
 
-def write(path: Union[str, Path], data: dict) -> None:
+def write_zarr(path: Union[str, Path], data: dict) -> None:
 
     # TODO validate or impose in method signature the minimum dict keys
     missing_keys, unknown_keys = _validate(data)
@@ -55,3 +58,8 @@ def _validate(data: dict) -> Tuple[list, list]:
     # TODO should validate the numpy / pandas values in the dict
 
     return missing_keys, unknown_keys
+
+
+def write_parquet(path: Union[str, Path], dataframe: DataFrame):
+    table = pa.Table.from_pandas(dataframe)
+    pq.write_table(table, path)
