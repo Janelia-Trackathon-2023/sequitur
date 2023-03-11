@@ -2,6 +2,8 @@ from __future__ import annotations
 from enum import Enum
 from typing import List
 
+# TODO: is there an alternative to Enums?
+
 class FileNames(Enum):
     ZARR = 'images.zarr'
     EDGES = 'edges.parquet'
