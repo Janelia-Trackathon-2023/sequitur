@@ -5,6 +5,7 @@ import numpy as np
 
 from sequitur.zarr.writer import write_zarr
 from sequitur.zarr.reader import read_zarr
+from sequitur.format import ZarrGroup
 
 
 @pytest.fixture
@@ -43,6 +44,5 @@ def test_write_read_arrays(my_path, minimum_img, minimum_lbl):
     read_data = read_zarr(my_path)
 
     # compare sub arrays
-    assert (read_data['raw'][:] == minimum_img).all()
-    assert (read_data['annotations'][:] == minimum_lbl).all()
-    
+    assert (read_data[ZarrGroup.IMAGES.value][:] == minimum_img).all()
+    assert (read_data[ZarrGroup.ANNOTATIONS.value][:] == minimum_lbl).all()

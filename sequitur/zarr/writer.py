@@ -5,6 +5,7 @@ from typing import Any, Union, List
 import numpy as np
 import zarr
 
+from sequitur.format import ZarrGroup
 
 def write_zarr(
         path: Union[str, Path], 
@@ -19,6 +20,6 @@ def write_zarr(
     root = zarr.open(path, mode='w')
     
     # raw and annotations image data
-    root.array(name='raw', data=data)
-    root.array(name='annotations', data=annotations)
+    root.array(name=ZarrGroup.IMAGES.value, data=data)
+    root.array(name=ZarrGroup.ANNOTATIONS.value, data=annotations)
     

@@ -6,7 +6,7 @@ import pandas as pd
 
 from sequitur.parquet.writer import _write_parquet, write
 from sequitur.parquet.reader import read_parquet
-
+from sequitur.format import EdgeEntries, NodeEntries
 
 @pytest.fixture
 def my_path(tmpdir):
@@ -16,9 +16,8 @@ def my_path(tmpdir):
 @pytest.fixture
 def minimum_example():
     return {
-        'nid': np.array([0]),
-        't': np.array([1]),
-        'x': np.array([2])
+        NodeEntries.ID.value: np.array([0]),
+        NodeEntries.COORDINATES.value: np.array([1])
     }
 
 
