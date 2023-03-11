@@ -6,6 +6,7 @@ import zarr
 
 from sequitur.format import ZarrGroup
 
+# TODO what if there are only annotations?
 def write_zarr(
         path: Union[str, Path], 
         data: np.ndarray, 

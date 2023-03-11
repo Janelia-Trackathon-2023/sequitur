@@ -18,12 +18,31 @@ class NodeEntries(Enum):
     COORDINATES = 'coordinates'
     SCORE = 'score'
 
+    @staticmethod
+    def get_mandatory_fields() -> list[str]:
+        return [
+            NodeEntries.ID.value,
+            NodeEntries.COORDINATES.value
+        ]
+
 class EdgeEntries(Enum):
     ID = 'eid'
     SOURCE = 'source'
     TARGET = 'target'
     SCORE = 'score'
 
+    @staticmethod
+    def get_mandatory_fields() -> list[str]:
+        return [
+            EdgeEntries.ID.value,
+            EdgeEntries.SOURCE.value,
+            EdgeEntries.TARGET.value
+        ]
+
 class GraphEntries(Enum):
     NODES = 'nodes'
     EDGES = 'edges'
+
+class Subgraph(Enum):
+    SOLUTION = 'solution'
+    GT = 'ground-truth'

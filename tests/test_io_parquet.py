@@ -4,7 +4,7 @@ import pytest
 import numpy as np
 import pandas as pd
 
-from sequitur.parquet.parquet_io import _write_parquet, write, read_parquet
+from sequitur.parquet.parquet_io import _write_parquet, write_parquet, read_parquet
 from sequitur.format import NodeEntries
 
 @pytest.fixture
@@ -45,7 +45,7 @@ def test_read_dataframe(my_path, minimum_example):
 
 
 def test_read_write_nodes_edges(tmpdir, simple_nodes, simple_edges):
-    write(tmpdir, simple_nodes, simple_edges)
+    write_parquet(tmpdir, simple_nodes, simple_edges)
 
     # check that files have been created
     assert Path(tmpdir, 'nodes.parquet').exists

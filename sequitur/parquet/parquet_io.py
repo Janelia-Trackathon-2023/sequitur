@@ -10,13 +10,13 @@ from sequitur.format import FileNames
 
 ACCEPTED_DATATYPES = dict[str, Any] | DataFrame
 
-def write(path: Union[str, Path], nodes: ACCEPTED_DATATYPES, edges: ACCEPTED_DATATYPES) -> None:
+def write_parquet(path: Union[str, Path], nodes: ACCEPTED_DATATYPES, edges: ACCEPTED_DATATYPES) -> None:
     """Write out a graph."""
 
+    # TODO validate path
     path = Path(path)
-
-    if not Path(path).is_dir():
-        raise ValueError("Supplied path must be a directory.")
+    if not path.exists():
+        path.mkdir(parents=True)
 
     # TODO: validate the incoming data
     if isinstance(nodes, dict):
