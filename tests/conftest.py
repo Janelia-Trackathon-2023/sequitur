@@ -28,13 +28,13 @@ EDGES = {
 
 
 @pytest.fixture
-def test_nodes() -> dict[str, list]:
+def simple_nodes() -> dict[str, list]:
     """Return the nodes of a simple test graph."""
     return NODES
 
 
 @pytest.fixture 
-def test_edges() -> dict[str, list]:
+def simple_edges() -> dict[str, list]:
     """Return the edges of a simple test graph."""
     return EDGES
 

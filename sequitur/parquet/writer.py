@@ -1,8 +1,7 @@
 from pathlib import Path
 
-from typing import Any, Union, List
+from typing import Any, Union
 
-import zarr
 from pandas import DataFrame
 import pyarrow as pa
 import pyarrow.parquet as pq
@@ -24,21 +23,9 @@ def write(path: Union[str, Path], nodes: ACCEPTED_DATATYPES, edges: ACCEPTED_DAT
     if isinstance(edges, dict):
         edges = DataFrame(edges)
 
+    # TODO define path in format
     _write_parquet(path / "nodes.parquet", nodes)
     _write_parquet(path / "edges.parquet", edges)
-
-
-# TODO take image as input
-def write_zarr(path: Union[str, Path], data: dict) -> None:
-    # TODO: do we want to be able to override?
-    # TODO check for .zarr? add .zarr?
-    if Path(path).exists():
-        raise ValueError(f'File {path} already exists.')
-
-    # create zarr groups
-    root = zarr.open(path, mode='w')
-
-    # TODO write image
 
 
 def _write_parquet(path: Union[str, Path], dataframe: DataFrame):
