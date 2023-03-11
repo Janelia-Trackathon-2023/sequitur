@@ -4,9 +4,8 @@ import pytest
 import numpy as np
 import pandas as pd
 
-from sequitur.parquet.writer import _write_parquet, write
-from sequitur.parquet.reader import read_parquet
-from sequitur.format import EdgeEntries, NodeEntries
+from sequitur.parquet.parquet_io import _write_parquet, write, read_parquet
+from sequitur.format import NodeEntries
 
 @pytest.fixture
 def my_path(tmpdir):

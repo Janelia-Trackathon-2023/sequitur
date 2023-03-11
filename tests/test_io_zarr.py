@@ -3,8 +3,7 @@ import pytest
 
 import numpy as np
 
-from sequitur.zarr.writer import write_zarr
-from sequitur.zarr.reader import read_zarr
+from sequitur.zarr.zarr_io import write_zarr, read_zarr
 from sequitur.format import ZarrGroup
 
 
