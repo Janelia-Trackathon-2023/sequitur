@@ -1,10 +1,28 @@
-from typing import List, Tuple, Optional
+from typing import Any, List, Tuple, Optional
 from pydantic import BaseModel, root_validator
 
 
+class FloatTuple(List[float]):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, values: List[float]):
+        return tuple(float(v) for v in values)
+
+class StrTuple(List[str]):
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, values: List[str]):
+        return tuple(str(v) for v in values)
+
 class NodeModel(BaseModel):
-    id: int
-    pos: Tuple[float]  # can be an empty tuple
+    node_id: int
+    coordinates: FloatTuple  # can be an empty tuple
     score: Optional[float] = None
 
     class Config:
@@ -12,7 +30,7 @@ class NodeModel(BaseModel):
 
 
 class EdgeModel(BaseModel):
-    id: int
+    edge_id: int
     src_id: int
     dst_id: int
     score: Optional[float] = None
@@ -24,7 +42,7 @@ class EdgeModel(BaseModel):
 class GraphModel(BaseModel):
     nodes: List[NodeModel]
     edges: List[EdgeModel]
-    axis_order: Tuple[str]  # can be an empty tuple
+    axis_order: StrTuple  # can be an empty tuple
 
     @root_validator
     def validate(cls, values):
@@ -43,7 +61,7 @@ class GraphModel(BaseModel):
 
 
 class TrackModel(GraphModel):
-    id: int
+    track_id: int
     start_id: int
     end_id: int
 
