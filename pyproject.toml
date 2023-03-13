@@ -10,6 +10,7 @@ python = "^3.8"
 zarr = "^2.14"
 pyarrow = "^11.0"
 pandas = "^1.5"
+pydantic = "^1.10.6"
 
 [build-system]
 requires = ["poetry-core"]
