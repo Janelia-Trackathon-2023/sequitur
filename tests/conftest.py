@@ -1,6 +1,6 @@
 import pytest
 
-from sequitur.format import NodeEntries, EdgeEntries
+from sequitur.format import NodeEntries, EdgeEntries, TrackEntries
 
 
 NODES = {
@@ -27,11 +27,11 @@ EDGES = {
 }
 
 
-# TRACKS = {
-#     "tid": [0, 1, 2, 3],
-#     "begin": [0, 2, 3, 6],
-#     "end": [1, 4, 5, 7],
-# }
+TRACKS = {
+    TrackEntries.ID: [0, 1, 2, 3],
+    TrackEntries.START: [0, 2, 3, 6],
+    TrackEntries.END: [1, 4, 5, 7],
+}
 
 
 @pytest.fixture
@@ -46,7 +46,7 @@ def simple_edges() -> dict[str, list]:
     return EDGES
 
 
-# @pytest.fixture 
-# def test_tracks() -> dict[str, list]:
-#     """Return the tracks defined in the graph."""
-#     return TRACKS
+@pytest.fixture 
+def simple_tracks() -> dict[str, list]:
+    """Return the tracks defined in the graph."""
+    return TRACKS

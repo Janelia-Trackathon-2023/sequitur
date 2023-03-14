@@ -33,8 +33,8 @@ class NodeModel(BaseModel):
 
 class EdgeModel(BaseModel):
     edge_id: int
-    src_id: int
-    dst_id: int
+    source_id: int
+    target_id: int
     score: Optional[float] = None
 
     class Config:
@@ -46,6 +46,7 @@ class GraphModel(BaseModel):
     edges: List[EdgeModel]
     axis_order: StrTuple  # can be an empty tuple
 
+    # TODO(arl): need to get this working!
     @root_validator
     def validate(cls, values):
         nodes = values.get("nodes")

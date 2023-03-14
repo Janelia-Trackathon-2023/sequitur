@@ -21,22 +21,22 @@ class NodeEntries(str, Enum):
     @staticmethod
     def get_mandatory_fields() -> list[str]:
         return [
-            NodeEntries.ID.value,
-            NodeEntries.COORDINATES.value
+            NodeEntries.ID,
+            NodeEntries.COORDINATES
         ]
 
 class EdgeEntries(str, Enum):
     ID = 'edge_id'
-    SOURCE = 'src_id'
-    TARGET = 'dst_id'
+    SOURCE = 'source_id'
+    TARGET = 'target_id'
     SCORE = 'score'
 
     @staticmethod
     def get_mandatory_fields() -> list[str]:
         return [
-            EdgeEntries.ID.value,
-            EdgeEntries.SOURCE.value,
-            EdgeEntries.TARGET.value
+            EdgeEntries.ID,
+            EdgeEntries.SOURCE,
+            EdgeEntries.TARGET
         ]
 
 class GraphEntries(str, Enum):
@@ -46,3 +46,9 @@ class GraphEntries(str, Enum):
 class Subgraph(str, Enum):
     SOLUTION = 'solution'
     GT = 'ground-truth'
+
+
+class TrackEntries(str, Enum):
+    ID = 'track_id'
+    START = 'start_id'
+    END = 'end_id'
