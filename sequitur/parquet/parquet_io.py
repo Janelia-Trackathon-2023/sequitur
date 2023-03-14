@@ -86,22 +86,24 @@ def _write_parquet_df(path: Union[str, Path], dataframe: DataFrame):
     table = pa.Table.from_pandas(dataframe)
     pq.write_table(table, path)
 
-def read_parquet(path: Union[str, Path], **kwargs) -> DataFrame:
+def _read_parquet(path: Union[str, Path], **kwargs) -> DataFrame:
     return pq.read_table(path, **kwargs).to_pandas()
 
 def read_nodes(path: Union[str, Path], **kwargs) -> list[NodeModel]:
-    dataframe = read_parquet(path, **kwargs)
+    dataframe = _read_parquet(path, **kwargs)
 
     pass
 
 def read_nodes_as_df(path: Union[str, Path], **kwargs) -> DataFrame:
-    pass
+    # TODO check that these are indeed nodes
+    return _read_parquet(path, **kwargs)
 
 def read_edges(path: Union[str, Path], **kwargs) -> list[EdgeModel]:
     pass
 
 def read_edges_as_df(path: Union[str, Path], **kwargs) -> DataFrame:
-    pass
+    # TODO check that these are indeed edges
+    return _read_parquet(path, **kwargs)
 
 def read_graph(path: Union[str, Path], **kwargs) -> GraphModel:
     pass
