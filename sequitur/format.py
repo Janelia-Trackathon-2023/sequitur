@@ -4,16 +4,16 @@ from typing import List
 
 # TODO: is there an alternative to Enums?
 
-class FileNames(Enum):
+class FileNames(str, Enum):
     ZARR = 'images.zarr'
     EDGES = 'edges.parquet'
     NODES = 'nodes.parquet'
 
-class ZarrGroup(Enum):
+class ZarrGroup(str, Enum):
     IMAGES = 'images'
     ANNOTATIONS = 'annotations'
 
-class NodeEntries(Enum):
+class NodeEntries(str, Enum):
     ID = 'nid'
     COORDINATES = 'coordinates'
     SCORE = 'score'
@@ -25,7 +25,7 @@ class NodeEntries(Enum):
             NodeEntries.COORDINATES.value
         ]
 
-class EdgeEntries(Enum):
+class EdgeEntries(str, Enum):
     ID = 'eid'
     SOURCE = 'source'
     TARGET = 'target'
@@ -39,10 +39,10 @@ class EdgeEntries(Enum):
             EdgeEntries.TARGET.value
         ]
 
-class GraphEntries(Enum):
+class GraphEntries(str, Enum):
     NODES = 'nodes'
     EDGES = 'edges'
 
-class Subgraph(Enum):
+class Subgraph(str, Enum):
     SOLUTION = 'solution'
     GT = 'ground-truth'
