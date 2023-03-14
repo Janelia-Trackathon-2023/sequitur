@@ -1,3 +1,3 @@
 __version__ = '0.0.1'
 
-# from .sequitur import open
+X# from .sequitur import open

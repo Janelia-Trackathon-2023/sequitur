@@ -52,9 +52,9 @@ class GraphModel(BaseModel):
         edges = values.get("edges")
         axis_order = values.get("axis_order")
         for node in nodes:
-            if len(node.pos) != len(axis_order):
+            if len(node.coordinates) != len(axis_order):
                 raise ValueError
-        node_ids = set(node.id for node in nodes)
+        node_ids = set(node.node_id for node in nodes)
         edge_node_set = set(edge.src_id for edge in edges).union(
             set(edge.dst_id for edge in edges)
         )
