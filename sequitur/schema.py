@@ -2,14 +2,6 @@ from typing import Any, List, Tuple, Optional
 from pydantic import BaseModel, root_validator
 
 
-class RequiredFieldsMixin:
-    """Return only the required fields from a pydantic model."""
-    @classmethod
-    def required_fields(cls) -> list[str]:
-        fields = [f for f, v in cls.__fields__.items() if v.required]
-        return fields
-
-
 class FloatTuple(List[float]):
     @classmethod
     def __get_validators__(cls):
@@ -30,7 +22,7 @@ class StrTuple(List[str]):
         return tuple(str(v) for v in values)
 
 
-class NodeModel(RequiredFieldsMixin, BaseModel):
+class NodeModel(BaseModel):
     node_id: int
     coordinates: FloatTuple  # can be an empty tuple
     score: Optional[float] = None
@@ -39,7 +31,7 @@ class NodeModel(RequiredFieldsMixin, BaseModel):
         extra = "allow"
 
 
-class EdgeModel(RequiredFieldsMixin, BaseModel):
+class EdgeModel(BaseModel):
     edge_id: int
     src_id: int
     dst_id: int

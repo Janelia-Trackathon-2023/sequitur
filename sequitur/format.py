@@ -14,7 +14,7 @@ class ZarrGroup(str, Enum):
     ANNOTATIONS = 'annotations'
 
 class NodeEntries(str, Enum):
-    ID = 'nid'
+    ID = 'node_id'
     COORDINATES = 'coordinates'
     SCORE = 'score'
 
@@ -26,9 +26,9 @@ class NodeEntries(str, Enum):
         ]
 
 class EdgeEntries(str, Enum):
-    ID = 'eid'
-    SOURCE = 'source'
-    TARGET = 'target'
+    ID = 'edge_id'
+    SOURCE = 'src_id'
+    TARGET = 'dst_id'
     SCORE = 'score'
 
     @staticmethod

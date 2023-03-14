@@ -2,21 +2,28 @@ import pytest
 
 from sequitur.format import NodeEntries, EdgeEntries
 
+
 NODES = {
-    NodeEntries.ID.value: [0, 1, 2, 3, 4, 5, 6, 7],
-    NodeEntries.COORDINATES.value: [0.0, 1.0, 2.0, 2.0, 3.0, 3.0, 4.0, 5.0],
-   # "y": [1.0, 1.0, 2.0, 0.0, 2.0, 0.0, 1.0, 1.0],
-   # "x": [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
-   # "t": [0, 1, 2, 2, 3, 3, 4, 5],
-    NodeEntries.SCORE.value: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
+    NodeEntries.ID: [0, 1, 2, 3, 4, 5, 6, 7],
+    NodeEntries.COORDINATES: [
+        (0.0, 1.0, 0.0, 0), 
+        (1.0, 1.0, 0.0, 1), 
+        (2.0, 2.0, 0.0, 2), 
+        (2.0, 0.0, 0.0, 2), 
+        (3.0, 2.0, 0.0, 3), 
+        (3.0, 0.0, 0.0, 3), 
+        (4.0, 1.0, 0.0, 4), 
+        (5.0, 1.0, 0.0, 5)
+    ],
+    NodeEntries.SCORE: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
 }
 
 
 EDGES = {
-    EdgeEntries.ID.value: [0, 1, 2, 3, 4, 5, 6, 7],
-    EdgeEntries.SOURCE.value: [0, 1, 1, 2, 3, 4, 5, 6],
-    EdgeEntries.TARGET.value: [1, 2, 3, 4, 5, 6, 6, 7],
-    EdgeEntries.SCORE.value: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
+    EdgeEntries.ID: [0, 1, 2, 3, 4, 5, 6, 7],
+    EdgeEntries.SOURCE: [0, 1, 1, 2, 3, 4, 5, 6],
+    EdgeEntries.TARGET: [1, 2, 3, 4, 5, 6, 6, 7],
+    EdgeEntries.SCORE: [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
 }
 
 
