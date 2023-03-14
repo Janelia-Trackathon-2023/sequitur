@@ -47,7 +47,7 @@ class GraphModel(BaseModel):
     axis_order: StrTuple  # can be an empty tuple
 
     # TODO(arl): need to get this working!
-    @root_validator
+   # @root_validator
     def validate(cls, values):
         nodes = values.get("nodes")
         edges = values.get("edges")

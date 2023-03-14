@@ -94,7 +94,7 @@ def test_io_graph(tmpdir, example_nodes_as_lst, example_edges_as_lst):
     # read the file back
     graph = read_graph(node_path, edge_path)
 
-    assert graph['nodes'] == example_nodes_as_lst
-    assert graph['edges'] == example_edges_as_lst
+    assert graph.nodes == example_nodes_as_lst
+    assert graph.edges == example_edges_as_lst
 
 
