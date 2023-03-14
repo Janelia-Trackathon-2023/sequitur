@@ -47,7 +47,7 @@ class GraphModel(BaseModel):
     axis_order: StrTuple  # can be an empty tuple
 
     # TODO(arl): need to get this working!
-   # @root_validator
+    @root_validator
     def validate(cls, values):
         nodes = values.get("nodes")
         edges = values.get("edges")
@@ -56,11 +56,12 @@ class GraphModel(BaseModel):
             if len(node.coordinates) != len(axis_order):
                 raise ValueError
         node_ids = set(node.node_id for node in nodes)
-        edge_node_set = set(edge.src_id for edge in edges).union(
-            set(edge.dst_id for edge in edges)
+        edge_node_set = set(edge.source_id for edge in edges).union(
+            set(edge.target_id for edge in edges)
         )
         if not edge_node_set.issubset(node_ids):
             raise ValueError
+        return values
 
 
 class TrackModel(BaseModel):
