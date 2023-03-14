@@ -63,7 +63,7 @@ class GraphModel(BaseModel):
             raise ValueError
 
 
-class TrackModel(GraphModel):
+class TrackModel(BaseModel):
     track_id: int
     start_id: int
     end_id: int

@@ -40,13 +40,13 @@ def example_nodes() -> dict[str, list]:
     return NODES
 
 
-@pytest.fixture 
+@pytest.fixture
 def example_edges() -> dict[str, list]:
     """Return the edges of a simple test graph."""
     return EDGES
 
 
 @pytest.fixture 
-def simple_tracks() -> dict[str, list]:
+def example_tracks() -> dict[str, list]:
     """Return the tracks defined in the graph."""
     return TRACKS
