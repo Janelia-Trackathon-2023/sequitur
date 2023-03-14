@@ -37,7 +37,7 @@ def write_nodes(
             ]
 
         # write nodes
-        _write_parquet_api(path / FileNames.NODES.value, nodes_list)
+        _write_parquet_from_list(path / FileNames.NODES.value, nodes_list)
 
 def write_edges(
         path: Union[str, Path], 
@@ -65,10 +65,10 @@ def write_edges(
             ]
 
         # write edges
-        _write_parquet_api(path / FileNames.EDGES.value, edges_list)
+        _write_parquet_from_list(path / FileNames.EDGES.value, edges_list)
 
 
-def _write_parquet_api(
+def _write_parquet_from_list(
         path: Union[str, Path], 
         data: list[Union[NodeModel, EdgeModel]]
     ):
@@ -141,10 +141,13 @@ def read_graph(
     nodes = read_nodes(node_path)
     edges = read_edges(edge_path)
 
+    # TODO change that:
+    axis = tuple(['?' for _ in nodes[0].coordinates])
+
     return GraphModel(
         nodes=nodes,
         edges=edges,
-        axis_order=('?',)
+        axis_order=axis
     )
 
 

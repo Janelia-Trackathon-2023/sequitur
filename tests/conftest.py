@@ -1,7 +1,9 @@
 import pytest
 
-from sequitur.format import NodeEntries, EdgeEntries, TrackEntries
+import pandas as pd
 
+from sequitur.format import NodeEntries, EdgeEntries, TrackEntries
+from sequitur.schema import NodeModel, EdgeModel
 
 NODES = {
     NodeEntries.ID: [0, 1, 2, 3, 4, 5, 6, 7],
@@ -44,6 +46,26 @@ def example_nodes() -> dict[str, list]:
 def example_edges() -> dict[str, list]:
     """Return the edges of a simple test graph."""
     return EDGES
+
+@pytest.fixture
+def example_nodes_as_lst() -> list[NodeModel]:
+    """Return the nodes of a simple test graph."""
+    rows_as_dict = pd.DataFrame(NODES).to_dict(orient='records')
+
+    return [
+        NodeModel(**row) for row in rows_as_dict
+    ]
+
+
+@pytest.fixture 
+def example_edges_as_lst() -> list[EdgeModel]:
+    """Return the edges of a simple test graph."""
+    rows_as_dict = pd.DataFrame(EDGES).to_dict(orient='records')
+
+    return [
+        EdgeModel(**row) for row in rows_as_dict
+    ]
+
 
 
 @pytest.fixture 

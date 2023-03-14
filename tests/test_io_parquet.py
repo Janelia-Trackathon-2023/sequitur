@@ -11,7 +11,7 @@ from sequitur.parquet.parquet_io import (
     read_graph,
     read_nodes_as_df,
     read_edges_as_df,
-    _write_parquet_api, 
+    _write_parquet_from_list, 
     _write_parquet_df
 )
 from sequitur.format import NodeEntries
@@ -56,45 +56,45 @@ def test_read_dataframe(my_path, minimum_example):
     assert read_dataframe.equals(dataframe)
 
 
-def test_io_nodemodel(tmpdir, example_nodes):
+def test_io_nodemodel(tmpdir, example_nodes_as_lst):
     # write nodes
     path = Path(tmpdir, 'nodes.parquet')
-    _write_parquet_api(path, example_nodes)
+    _write_parquet_from_list(path, example_nodes_as_lst)
 
     assert path.exists()
 
     # read the file back
     nodes_read = read_nodes(path)
 
-    assert nodes_read == example_nodes
+    assert nodes_read == example_nodes_as_lst
 
 
-def test_io_edgemodel(tmpdir, example_edges):
+def test_io_edgemodel(tmpdir, example_edges_as_lst):
     # write edges
     path = Path(tmpdir, 'edges.parquet')
-    _write_parquet_api(path, example_edges)
+    _write_parquet_from_list(path, example_edges_as_lst)
 
     assert path.exists()
 
     # read the file back
     edges_read = read_edges(path)
 
-    assert edges_read == example_edges
+    assert edges_read == example_edges_as_lst
 
 
-def test_io_graph(tmpdir, example_nodes, example_edges):
+def test_io_graph(tmpdir, example_nodes_as_lst, example_edges_as_lst):
     # write nodes
     node_path = Path(tmpdir, 'nodes.parquet')
-    _write_parquet_api(node_path, example_nodes)
+    _write_parquet_from_list(node_path, example_nodes_as_lst)
 
     # write edges
     edge_path = Path(tmpdir, 'edges.parquet')
-    _write_parquet_api(edge_path, example_edges)
+    _write_parquet_from_list(edge_path, example_edges_as_lst)
 
     # read the file back
     graph = read_graph(node_path, edge_path)
 
-    assert graph['nodes'] == example_nodes
-    assert graph['edges'] == example_edges
+    assert graph['nodes'] == example_nodes_as_lst
+    assert graph['edges'] == example_edges_as_lst
 
 
