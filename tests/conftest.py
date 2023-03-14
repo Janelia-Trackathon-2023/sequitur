@@ -47,6 +47,7 @@ def example_edges() -> dict[str, list]:
     """Return the edges of a simple test graph."""
     return EDGES
 
+
 @pytest.fixture
 def example_nodes_as_lst() -> list[NodeModel]:
     """Return the nodes of a simple test graph."""

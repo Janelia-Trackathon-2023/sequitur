@@ -17,7 +17,7 @@ class SmartModel(BaseModel):
         return fields
 
 
-def validate_df(dataframe: Union[dict[str, List[Any]], pd.DataFrame]) -> None:
+def validate_df(dataframe: Union[dict[str, List[Any]], pd.DataFrame]) -> type:
     """Validate the columns keys of a dataframe or dict against the required fields of a model."""
     
     # try to infer the model type from the keys in the supplied dictionary or dataframe
