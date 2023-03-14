@@ -5,10 +5,16 @@ import numpy as np
 import pandas as pd
 
 from sequitur.parquet.parquet_io import (
-    _write_parquet_df, write_parquet, read_parquet, _write_parquet_api
+    _read_parquet_df,
+    read_nodes,
+    read_edges,
+    read_graph,
+    read_nodes_as_df,
+    read_edges_as_df,
+    _write_parquet_api, 
+    _write_parquet_df
 )
 from sequitur.format import NodeEntries
-from sequitur.schema import NodeModel, EdgeModel
 
 @pytest.fixture
 def my_path(tmpdir):
@@ -35,6 +41,9 @@ def test_write_dataframe(my_path, minimum_example):
 
 
 def test_read_dataframe(my_path, minimum_example):
+    """
+    
+    """
     # create dataframe from dictionary
     dataframe = pd.DataFrame(minimum_example)
 
@@ -42,46 +51,50 @@ def test_read_dataframe(my_path, minimum_example):
     _write_parquet_df(my_path, dataframe)
 
     # load
-    read_dataframe = read_parquet(my_path)
+    read_dataframe = _read_parquet_df(my_path)
 
-    assert read_dataframe.to_pandas().equals(dataframe)
+    assert read_dataframe.equals(dataframe)
 
 
-def test_read_write_nodes_edges(tmpdir, simple_nodes, simple_edges):
-    write_parquet(tmpdir, simple_nodes, simple_edges)
-
-    # check that files have been created
-    assert Path(tmpdir, 'nodes.parquet').exists
-    assert Path(tmpdir, 'edges.parquet').exists
-
-    # compare nodes
-    read_nodes = read_parquet(Path(tmpdir, 'nodes.parquet'))
-    assert read_nodes.to_pandas().equals(pd.DataFrame(simple_nodes))
-
-    # compare edges
-    read_edges = read_parquet(Path(tmpdir, 'edges.parquet'))
-    assert read_edges.to_pandas().equals(pd.DataFrame(simple_edges))
-
-def test_io_api(tmpdir):
-    nodes = [
-        NodeModel(node_id=i, coordinates=(i,)) for i in range(5)
-    ]
-
+def test_io_nodemodel(tmpdir, example_nodes):
+    # write nodes
     path = Path(tmpdir, 'nodes.parquet')
-    _write_parquet_api(path, nodes)
+    _write_parquet_api(path, example_nodes)
 
     assert path.exists()
 
-    read_nodes = read_parquet(path)
+    # read the file back
+    nodes_read = read_nodes(path)
 
-    # read 
-    fields = nodes[0].__fields__.keys()
+    assert nodes_read == example_nodes
 
-    table = {}
-    for f in fields:
-        table.update(
-            {
-                f: [getattr(node, f) for node in nodes]
-            }
-        )
-    assert read_nodes.to_pandas().equals(pd.DataFrame(table))
+
+def test_io_edgemodel(tmpdir, example_edges):
+    # write edges
+    path = Path(tmpdir, 'edges.parquet')
+    _write_parquet_api(path, example_edges)
+
+    assert path.exists()
+
+    # read the file back
+    edges_read = read_edges(path)
+
+    assert edges_read == example_edges
+
+
+def test_io_graph(tmpdir, example_nodes, example_edges):
+    # write nodes
+    node_path = Path(tmpdir, 'nodes.parquet')
+    _write_parquet_api(node_path, example_nodes)
+
+    # write edges
+    edge_path = Path(tmpdir, 'edges.parquet')
+    _write_parquet_api(edge_path, example_edges)
+
+    # read the file back
+    graph = read_graph(node_path, edge_path)
+
+    assert graph['nodes'] == example_nodes
+    assert graph['edges'] == example_edges
+
+
