@@ -11,6 +11,7 @@ from sequitur.schema import NodeModel, EdgeModel, GraphModel, TrackModel
 
 ACCEPTED_DTYPES = list[dict[str, Any]] | dict[str, Any] | DataFrame
 
+# TODO simplify this method and the following one using the validator
 def write_nodes(
         path: Union[str, Path], 
         nodes: Union[ACCEPTED_DTYPES, list[NodeModel]]
