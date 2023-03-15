@@ -4,22 +4,37 @@ from typing import Union, Any
 
 import pandas as pd
 import numpy as np
+import zarr
 
 from numpy import ndarray
 from pandas import DataFrame
 
 from sequitur.schema import GraphModel, TrackModel
+from sequitur.format import *
 
 class SequiturFile:
     
-    def __init__(self, path: Union[str, Path], mode='r') -> None:
+    def __init__(self, path: Path, mode='r') -> None:
         self._mode = mode if mode == 'w' else 'r'
  
+        self._zarr_file = None
         self._has_images = False
         self._has_annotations = False
         self._has_cgraph = False
         self._has_solutions = False
         self._has_tracks = False
+
+        if not path.exists() and mode == 'r':
+            raise ValueError(f'File {path} does not exist.')
+        elif not path.exists() and mode == 'w':
+            path.mkdir(parents=True)
+        else:
+            # Path exists
+            if Path(path, PATH_IMAGE).exists():
+                # zarr
+                self._zarr_file = zarr.open(Path(path, PATH_IMAGE))
+                self._has_images = ZarrGroup.IMAGES in self._zarr_file
+                self._has_annotations = ZarrGroup.ANNOTATIONS in self._zarr_file
 
         # TODO open file if exists
         # TODO check existence of the diverse folder content
@@ -54,32 +69,13 @@ class SequiturFile:
     def get_annotations(self) -> ndarray:
         pass
 
-    def get_candidate_graph(self) -> GraphModel:
-        pass
-
-    def get_candidate_graph_as_df(self) -> list[DataFrame]:
-        pass
-
-    def get_candidate_graph_as_dict(self) -> list[dict[str, Any]]:
-        pass
-
-    def get_solutions(self) -> list[GraphModel]:
-        pass
-
-    def get_solutions_as_df(self) -> list[tuple[DataFrame]]:
+    def get_candidate_graph(self) -> list[DataFrame]:
         pass
     
-    def get_solutions_as_dict(self) -> list[dict[str, Any]]:
+    def get_solutions(self) -> list[tuple[DataFrame]]:
         pass
 
-    # TODO: shouldn't the simplest method return a dataframe rather?
-    def get_tracks(self) -> list[TrackModel]:
-        pass
-
-    def get_tracks_as_df(self) -> list[DataFrame]:
-        pass
-    
-    def get_tracks_as_dict(self) -> list[dict[str, Any]]:
+    def get_tracks(self) -> list[DataFrame]:
         pass
 
     def add_image(self, array: ndarray) -> None:

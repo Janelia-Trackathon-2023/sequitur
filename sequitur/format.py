@@ -1,17 +1,31 @@
 from __future__ import annotations
+from pathlib import Path
+
 from enum import Enum
 from typing import List
 
 # TODO: is there an alternative to Enums?
 
+
+
 class FileNames(str, Enum):
+    MAIN = 'sequitur.file'
     ZARR = 'images.zarr'
     EDGES = 'edges.parquet'
     NODES = 'nodes.parquet'
+    SOLUTION = 'solution.parquet'
+    TRACKS = 'tracks.parquet'
 
 class ZarrGroup(str, Enum):
     IMAGES = 'images'
     ANNOTATIONS = 'annotations'
+
+PATH_IMAGE = Path(FileNames.MAIN, FileNames.ZARR)
+PATH_GRAPH = Path(FileNames.MAIN, 'graph')
+PATH_EDGES = Path(FileNames.MAIN, 'graph', 'edges', FileNames.EDGES)
+PATH_NODES = Path(FileNames.MAIN, 'graph', 'nodes', FileNames.NODES)
+PATH_SOLUTION = Path(FileNames.MAIN, 'solution', 'solution', FileNames.SOLUTION)
+PATH_NODES = Path(FileNames.MAIN, 'graph', 'tracks', FileNames.TRACKS)
 
 class NodeEntries(str, Enum):
     ID = 'node_id'
