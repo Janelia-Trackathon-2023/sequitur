@@ -17,6 +17,7 @@ class FileNames(str, Enum):
     SOLUTION_NODES = 'solution_edges.parquet'
     TRACKS = 'tracks.parquet'
 
+# TODO these are not group anymore
 class ZarrGroup(str, Enum):
     IMAGES = 'images'
     ANNOTATIONS = 'annotations'

@@ -34,6 +34,7 @@ class SequiturFile:
             # Path exists, check if it contains the zarr
             if Path(path, PATH_IMAGE).exists():
                 # zarr
+                # TODO: this opens the zarr, what is the overhead?
                 self._zarr_file = zarr.open(Path(path, PATH_IMAGE))
                 self._has_images = ZarrGroup.IMAGES in self._zarr_file
                 self._has_annotations = ZarrGroup.ANNOTATIONS in self._zarr_file
@@ -61,7 +62,6 @@ class SequiturFile:
                             'Broken graph: edges, solution or tracks cannot exist without nodes.'
                         )
             
-
     @property
     def mode(self):
         return self._mode
@@ -92,11 +92,11 @@ class SequiturFile:
     
     def read_image(self) -> ndarray:
         if self.has_images:
-            return self._zarr_file[ZarrGroup.IMAGES]
+            return self._zarr_file[ZarrGroup.IMAGES][:]
 
     def read_annotations(self) -> ndarray:
         if self.has_annotations:
-            return self._zarr_file[ZarrGroup.ANNOTATIONS]
+            return self._zarr_file[ZarrGroup.ANNOTATIONS][:]
 
     def read_nodes(self) -> DataFrame:
         if self.has_nodes:
@@ -114,8 +114,20 @@ class SequiturFile:
 
     def write_image(self, array: ndarray) -> None:
         if self.mode == 'w':
-            pass
+            if self._zarr_file is None:
+                self._zarr_file = zarr.open(Path(self._path, PATH_IMAGE))
+                
+            # TODO better way to do zarr?
+            if self._has_images:
+                # TODO here we can have dimension and chunk problems
+                self._zarr_file[ZarrGroup.IMAGES.value] = array
+            else:
+                self._zarr_file.array(name=ZarrGroup.IMAGES.value, data=array)
+            
+            self._has_images = True
 
+            
+    # TODO
     def copy_image(self, path_to_zarr: Union[str, Path]) -> None:
         if self.mode == 'w':
             pass
@@ -124,6 +136,7 @@ class SequiturFile:
         if self.mode == 'w':
             pass
 
+    # TODO
     def copy_annotations(self, path_to_zarr: Union[str, Path]) -> None:
         if self.mode == 'w':
             pass
@@ -149,6 +162,7 @@ class SequiturFile:
         if self.mode == 'w':
             pass
 
+    # TODO remove functions?
 
 def open(path: Union[str, Path], mode='r'):
     return SequiturFile(path=path, mode=mode)

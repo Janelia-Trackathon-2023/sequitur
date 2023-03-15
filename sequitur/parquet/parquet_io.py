@@ -15,7 +15,7 @@ ACCEPTED_DTYPES = list[dict[str, Any]] | dict[str, Any] | DataFrame
 # TODO we should make sure that edges cannot be written instead of nodes
 
 def write_df(
-    path: Union[str, Path], 
+    path: Path, 
     dataframe: DataFrame,
     *,
     axis_order: Optional[StrTuple] = None,
@@ -24,13 +24,15 @@ def write_df(
     inferred_type = validate_df(dataframe)
     table = pa.Table.from_pandas(dataframe)
 
-    # TODO create parent folder if it doesn't exists
+    if not path.parent.exists():
+        path.parent.mkdir(parents=True)
+        
     pq.write_table(table, path)
 
     
 
 def write_nodes(
-    path: Union[str, Path], 
+    path: Path, 
     nodes: Union[ACCEPTED_DTYPES, list[NodeModel]],
     *,
     axis_order: Optional[StrTuple] = None,
