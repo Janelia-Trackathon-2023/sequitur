@@ -43,23 +43,21 @@ def test_existing_zarr(tmpdir):
     assert not sequ.has_annotations
 
     # get image array
-    read_image = sequ.read_image()
-    assert (read_image == image).all()
+    read_labels = sequ.read_image()
+    assert (read_labels == image).all()
 
     # add annotations
     labels = np.array([
         [0, 1, 2],
         [3, 4, 5]
     ])
+    sequ.write_annotations(labels)
+    assert sequ.has_images
+    assert sequ.has_annotations
 
-    # create new file
-    #sequ = SequiturFile(path, mode='r')
-    #assert sequ.has_images
-    #assert sequ.has_annotations
-
-    # get labels array
-    #read_labels = sequ.read_annotations()
-    #assert read_labels == labels
+    # get label array
+    read_labels = sequ.read_annotations()
+    assert (read_labels == labels).all()
 
 
 def test_existing_nodes_and_edges(tmpdir, example_nodes, example_edges):

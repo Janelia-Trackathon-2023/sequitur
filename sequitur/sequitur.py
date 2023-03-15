@@ -126,7 +126,6 @@ class SequiturFile:
             
             self._has_images = True
 
-            
     # TODO
     def copy_image(self, path_to_zarr: Union[str, Path]) -> None:
         if self.mode == 'w':
@@ -134,7 +133,17 @@ class SequiturFile:
 
     def write_annotations(self, array: ndarray) -> None:
         if self.mode == 'w':
-            pass
+            if self._zarr_file is None:
+                self._zarr_file = zarr.open(Path(self._path, PATH_IMAGE))
+                
+            # TODO better way to do zarr?
+            if self._has_images:
+                # TODO here we can have dimension and chunk problems
+                self._zarr_file[ZarrGroup.ANNOTATIONS.value] = array
+            else:
+                self._zarr_file.array(name=ZarrGroup.ANNOTATIONS.value, data=array)
+            
+            self._has_annotations = True
 
     # TODO
     def copy_annotations(self, path_to_zarr: Union[str, Path]) -> None:
