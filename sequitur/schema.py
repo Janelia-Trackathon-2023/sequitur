@@ -1,5 +1,6 @@
 from typing import Any, List, Tuple, Optional
 from pydantic import BaseModel, root_validator
+import networkx as nx
 
 
 class FloatTuple(List[float]):
@@ -49,17 +50,12 @@ class EdgeModel(BaseModel):
 class GraphModel(BaseModel):
     nodes: List[NodeModel]
     edges: List[EdgeModel]
-    axis_order: StrTuple  # can be an empty tuple
 
     # TODO(arl): need to get this working!
     @root_validator
     def validate(cls, values):
         nodes = values.get("nodes")
         edges = values.get("edges")
-        axis_order = values.get("axis_order")
-        for node in nodes:
-            if len(node.coordinates) != len(axis_order):
-                raise ValueError
         node_ids = set(node.node_id for node in nodes)
         edge_node_set = set(edge.source_id for edge in edges).union(
             set(edge.target_id for edge in edges)
@@ -67,6 +63,23 @@ class GraphModel(BaseModel):
         if not edge_node_set.issubset(node_ids):
             raise ValueError
         return values
+
+    def as_networkx(self):
+        g = nx.DiGraph()
+        g.add_nodes_from([(node.node_id, node) for node in self.nodes])
+        g.add_edges_from([(edge.source_id, edge.target_id, edge) for edge in self.edges])
+        return g
+
+    @classmethod
+    def parse_networkx(cls, graph):
+        nodes = [NodeModel.parse_obj(obj[1]) for obj in graph.nodes(data=True)]
+        edges = [EdgeModel.parse_obj(obj[2]) for obj in graph.edges(data=True)]
+        graph_model = cls(
+            nodes=nodes,
+            edges=edges,
+        )
+        return graph_model
+        
 
 
 class TrackModel(BaseModel):
