@@ -23,10 +23,10 @@ class ZarrGroup(str, Enum):
     ANNOTATIONS = 'annotations'
 
 # TODO: frozen dataclass with those as fields 
-PATH_IMAGE = Path(FileNames.ZARR)
+PATH_IMAGE = Path(FileNames.ZARR.value)
 PATH_GRAPH = Path('graph')
 PATH_NODES = Path('graph', 'nodes', FileNames.NODES.value)
-PATH_EDGES = Path('graph', 'subgraph', 'edges', FileNames.EDGES.value)
+PATH_EDGES = Path('graph', 'edges', FileNames.EDGES.value)
 PATH_SOLUTION_EDGES = Path('graph', 'subgraph', 'solution', FileNames.SOLUTION_EDGES.value)
 PATH_SOLUTION_NODES = Path('graph', 'subgraph', 'solution', FileNames.SOLUTION_NODES.value)
 PATH_TRACKS = Path('graph', 'subgraph', 'tracks', FileNames.TRACKS.value)

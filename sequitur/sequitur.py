@@ -14,9 +14,9 @@ from sequitur.parquet.parquet_io import read_df, write_df
 
 class SequiturFile:
     
-    def __init__(self, path: Path, mode='r') -> None:
+    def __init__(self, path: Union[str, Path], mode='r') -> None:
         self._mode = mode if mode == 'w' else 'r'
-        self._path = path
+        self._path = Path(path)
  
         self._zarr_file = None
         self._has_images = False
@@ -26,34 +26,34 @@ class SequiturFile:
         self._has_solution = False
         self._has_tracks = False
 
-        if not path.exists() and mode == 'r':
-            raise ValueError(f'File {path} does not exist.')
-        elif not path.exists() and mode == 'w':
-            path.mkdir(parents=True)
+        if not self._path.exists() and mode == 'r':
+            raise ValueError(f'File {self._path} does not exist.')
+        elif not self._path.exists() and mode == 'w':
+            self._path.mkdir(parents=True)
         else:
             # Path exists, check if it contains the zarr
-            if Path(path, PATH_IMAGE).exists():
+            if Path(self._path, PATH_IMAGE).exists():
                 # zarr
                 # TODO: this opens the zarr, what is the overhead?
-                self._zarr_file = zarr.open(Path(path, PATH_IMAGE))
-                self._has_images = ZarrGroup.IMAGES in self._zarr_file
-                self._has_annotations = ZarrGroup.ANNOTATIONS in self._zarr_file
+                self._zarr_file = zarr.open(Path(self._path, PATH_IMAGE))
+                self._has_images = ZarrGroup.IMAGES.value in self._zarr_file
+                self._has_annotations = ZarrGroup.ANNOTATIONS.value in self._zarr_file
 
             # Candidate graph
-            if Path(path, PATH_GRAPH).exists():
+            if Path(self._path, PATH_GRAPH).exists():
                 # nodes
-                self._has_nodes = Path(path, PATH_NODES).exists() 
+                self._has_nodes = Path(self._path, PATH_NODES).exists() 
 
                 # edges
                 # TODO support for multiple subgraphs
-                self._has_edges =  Path(path, PATH_EDGES).exists() 
+                self._has_edges =  Path(self._path, PATH_EDGES).exists() 
 
                 # solution
                 # TOOD what to do with the solution nodes and edges here?
-                self._has_solution =  Path(path, PATH_SOLUTION_EDGES).exists() 
+                self._has_solution =  Path(self._path, PATH_SOLUTION_EDGES).exists() 
 
                 # tracks
-                self._has_tracks =  Path(path, PATH_TRACKS).exists() 
+                self._has_tracks =  Path(self._path, PATH_TRACKS).exists() 
 
                 # TODO: change this, solutions and tracks require edges as well
                 if not self._has_nodes:
@@ -92,11 +92,11 @@ class SequiturFile:
     
     def read_image(self) -> ndarray:
         if self.has_images:
-            return self._zarr_file[ZarrGroup.IMAGES][:]
+            return self._zarr_file[ZarrGroup.IMAGES.value][:]
 
     def read_annotations(self) -> ndarray:
         if self.has_annotations:
-            return self._zarr_file[ZarrGroup.ANNOTATIONS][:]
+            return self._zarr_file[ZarrGroup.ANNOTATIONS.value][:]
 
     def read_nodes(self) -> DataFrame:
         if self.has_nodes:
