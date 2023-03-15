@@ -20,12 +20,13 @@ class ZarrGroup(str, Enum):
     IMAGES = 'images'
     ANNOTATIONS = 'annotations'
 
-PATH_IMAGE = Path(FileNames.MAIN, FileNames.ZARR)
-PATH_GRAPH = Path(FileNames.MAIN, 'graph')
-PATH_EDGES = Path(FileNames.MAIN, 'graph', 'edges', FileNames.EDGES)
-PATH_NODES = Path(FileNames.MAIN, 'graph', 'nodes', FileNames.NODES)
-PATH_SOLUTION = Path(FileNames.MAIN, 'solution', 'solution', FileNames.SOLUTION)
-PATH_NODES = Path(FileNames.MAIN, 'graph', 'tracks', FileNames.TRACKS)
+# TODO: frozen dataclass with those as fields 
+PATH_IMAGE = Path(FileNames.ZARR)
+PATH_GRAPH = Path('graph')
+PATH_NODES = Path('graph', 'nodes', FileNames.NODES)
+PATH_EDGES = Path('graph', 'subgraph', 'edges', FileNames.EDGES)
+PATH_SOLUTION = Path('graph', 'subgraph', 'solution', FileNames.SOLUTION)
+PATH_TRACKS = Path('graph', 'subgraph', 'tracks', FileNames.TRACKS)
 
 class NodeEntries(str, Enum):
     ID = 'node_id'

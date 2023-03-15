@@ -45,7 +45,7 @@ TRACKS = {
 
 
 @pytest.fixture
-def example_nodes() -> dict[str, list]:
+def example_edges() -> dict[str, list]:
     """Return the nodes of a simple test graph."""
     return NODES
 

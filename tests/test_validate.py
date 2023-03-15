@@ -2,8 +2,8 @@ from sequitur.validate import validate_df
 from sequitur.schema import NodeModel, EdgeModel, TrackModel
 
 
-def test_node_validation(example_nodes):
-    inferred_type = validate_df(example_nodes)
+def test_node_validation(example_edges):
+    inferred_type = validate_df(example_edges)
     assert issubclass(inferred_type, NodeModel)
 
 

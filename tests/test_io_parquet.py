@@ -22,9 +22,9 @@ def my_path(tmpdir):
     return Path(tmpdir, 'myfile.parquet')
 
 
-def test_write_dataframe(my_path, example_nodes):
+def test_write_dataframe(my_path, example_edges):
     # create dataframe from dictionary
-    dataframe = pd.DataFrame(example_nodes)
+    dataframe = pd.DataFrame(example_edges)
 
     # write file 
     write_parquet_df(my_path, dataframe)
@@ -33,12 +33,12 @@ def test_write_dataframe(my_path, example_nodes):
     assert Path(my_path).exists()
 
 
-def test_read_dataframe(my_path, example_nodes):
+def test_read_dataframe(my_path, example_edges):
     """
     
     """
     # create dataframe from dictionary
-    dataframe = pd.DataFrame(example_nodes)
+    dataframe = pd.DataFrame(example_edges)
 
     # write file 
     write_parquet_df(my_path, dataframe)

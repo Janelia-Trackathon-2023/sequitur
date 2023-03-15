@@ -22,6 +22,8 @@ def write_parquet_df(
 ):
     inferred_type = validate_df(dataframe)
     table = pa.Table.from_pandas(dataframe)
+
+    # TODO create parent folder if it doesn't exists
     pq.write_table(table, path)
 
     
