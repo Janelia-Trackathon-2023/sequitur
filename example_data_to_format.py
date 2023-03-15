@@ -5,10 +5,10 @@ Load the example data and save it to our format.
 from pathlib import Path
 import json
 import pandas as pd
+import numpy as np
 import zarr
 
-from sequitur.format import EdgeEntries, NodeEntries
-from sequitur.build_file import FileBuilder
+from sequitur.sequitur import open
 
 # %%
 # Load and shape data

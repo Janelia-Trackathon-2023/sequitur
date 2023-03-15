@@ -24,7 +24,12 @@ class StrTuple(List[str]):
 
 class NodeModel(BaseModel):
     node_id: int
-    coordinates: FloatTuple  # can be an empty tuple
+
+    # coordinates: FloatTuple  # can be an empty tuple
+    t: Optional[float] = None
+    x: Optional[float] = None
+    y: Optional[float] = None
+    z: Optional[float] = None
     score: Optional[float] = None
 
     class Config:
