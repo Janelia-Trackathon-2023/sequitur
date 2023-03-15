@@ -12,6 +12,7 @@ from sequitur.validate import validate_df
 
 ACCEPTED_DTYPES = list[dict[str, Any]] | dict[str, Any] | DataFrame
 
+# TODO we should make sure that edges cannot be written instead of nodes
 
 def write_parquet_df(
     path: Union[str, Path], 
@@ -40,7 +41,7 @@ def write_nodes(
         inferred_type = validate_df(nodes_df)
         
         # write out the nodes to file    
-        _write_parquet_df(path / FileNames.NODES.value, nodes_df)
+        write_parquet_df(path / FileNames.NODES.value, nodes_df)
     else:
         if isinstance(nodes[0], NodeModel):
             nodes_list = nodes
@@ -69,7 +70,7 @@ def write_edges(
             )
         
         # write out the nodes to file    
-        _write_parquet_df(path / FileNames.EDGES, edges_df)
+        write_parquet_df(path / FileNames.EDGES, edges_df)
     else:
         if isinstance(edges[0], EdgeModel):
             edges_list = edges
@@ -99,7 +100,7 @@ def _write_parquet_from_list(
         )
 
     # convert to dataframe and write to disk
-    _write_parquet_df(path, DataFrame.from_dict(table))
+    write_parquet_df(path, DataFrame.from_dict(table))
     
 
 
@@ -121,7 +122,7 @@ def read_nodes(path: Union[str, Path], **kwargs) -> list[NodeModel]:
     
     return nodes_lst
 
-def read_nodes_as_df(path: Union[str, Path], **kwargs) -> DataFrame:
+def read_df(path: Union[str, Path], **kwargs) -> DataFrame:
     # TODO check that these are indeed nodes
     return _read_parquet_df(path, **kwargs)
 
@@ -136,10 +137,6 @@ def read_edges(path: Union[str, Path], **kwargs) -> list[EdgeModel]:
         )
     
     return edges_lst
-
-def read_edges_as_df(path: Union[str, Path], **kwargs) -> DataFrame:
-    # TODO check that these are indeed edges
-    return _read_parquet_df(path, **kwargs)
 
 
 def read_graph(

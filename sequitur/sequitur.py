@@ -10,12 +10,13 @@ from numpy import ndarray
 from pandas import DataFrame
 
 from sequitur.format import *
-from sequitur.parquet.parquet_io import read_edges
+from sequitur.parquet.parquet_io import read_df
 
 class SequiturFile:
     
     def __init__(self, path: Path, mode='r') -> None:
         self._mode = mode if mode == 'w' else 'r'
+        self._path = path
  
         self._zarr_file = None
         self._has_images = False
@@ -47,7 +48,8 @@ class SequiturFile:
                 self._has_edges =  Path(path, PATH_EDGES).exists() 
 
                 # solution
-                self._has_solution =  Path(path, PATH_SOLUTION).exists() 
+                # TOOD what to do with the solution nodes and edges here?
+                self._has_solution =  Path(path, PATH_SOLUTION_EDGES).exists() 
 
                 # tracks
                 self._has_tracks =  Path(path, PATH_TRACKS).exists() 
@@ -88,28 +90,29 @@ class SequiturFile:
     def has_tracks(self):
         return self._has_tracks
     
-    def get_image(self) -> ndarray:
+    def read_image(self) -> ndarray:
         if self.has_images:
             return self._zarr_file[ZarrGroup.IMAGES]
 
-    def get_annotations(self) -> ndarray:
+    def read_annotations(self) -> ndarray:
         if self.has_annotations:
             return self._zarr_file[ZarrGroup.ANNOTATIONS]
 
-    def get_nodes(self) -> list[DataFrame]:
+    def read_nodes(self) -> DataFrame:
         if self.has_nodes:
-            return 
+            return read_df(Path(self._path, PATH_NODES))
     
-    def get_edges(self) -> list[DataFrame]:
-        pass
+    def read_edges(self) -> DataFrame:
+        if self.has_edges:
+            return read_df(Path(self._path, PATH_EDGES))
     
-    def get_solution(self) -> list[tuple[DataFrame]]:
+    def read_solution(self) -> list[tuple[DataFrame]]:
         pass
 
-    def get_tracks(self) -> list[DataFrame]:
+    def read_tracks(self) -> list[DataFrame]:
         pass
 
-    def add_image(self, array: ndarray) -> None:
+    def write_image(self, array: ndarray) -> None:
         if self.mode == 'w':
             pass
 
@@ -117,7 +120,7 @@ class SequiturFile:
         if self.mode == 'w':
             pass
 
-    def add_annotations(self, array: ndarray) -> None:
+    def write_annotations(self, array: ndarray) -> None:
         if self.mode == 'w':
             pass
 
@@ -126,17 +129,21 @@ class SequiturFile:
             pass
 
     # TODO typing
-    def add_candidate_graph(self, nodes, edges=None) -> None:
+    def write_nodes(self, nodes) -> None:
+        if self.mode == 'w':
+            pass
+
+    def write_edges(self, edges) -> None:
         if self.mode == 'w':
             pass
 
     # TODO typing
-    def add_solution(self, nodes, edges) -> None:
+    def write_solution(self, nodes, edges) -> None:
         if self.mode == 'w':
             pass
 
     # TODO typing
-    def add_tracks(self, nodes, edges) -> None:
+    def write_tracks(self, nodes, edges) -> None:
         if self.mode == 'w':
             pass
 

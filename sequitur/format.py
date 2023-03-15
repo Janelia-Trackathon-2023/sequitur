@@ -13,7 +13,8 @@ class FileNames(str, Enum):
     ZARR = 'images.zarr'
     EDGES = 'edges.parquet'
     NODES = 'nodes.parquet'
-    SOLUTION = 'solution.parquet'
+    SOLUTION_EDGES = 'solution_edges.parquet'
+    SOLUTION_NODES = 'solution_edges.parquet'
     TRACKS = 'tracks.parquet'
 
 class ZarrGroup(str, Enum):
@@ -23,10 +24,11 @@ class ZarrGroup(str, Enum):
 # TODO: frozen dataclass with those as fields 
 PATH_IMAGE = Path(FileNames.ZARR)
 PATH_GRAPH = Path('graph')
-PATH_NODES = Path('graph', 'nodes', FileNames.NODES)
-PATH_EDGES = Path('graph', 'subgraph', 'edges', FileNames.EDGES)
-PATH_SOLUTION = Path('graph', 'subgraph', 'solution', FileNames.SOLUTION)
-PATH_TRACKS = Path('graph', 'subgraph', 'tracks', FileNames.TRACKS)
+PATH_NODES = Path('graph', 'nodes', FileNames.NODES.value)
+PATH_EDGES = Path('graph', 'subgraph', 'edges', FileNames.EDGES.value)
+PATH_SOLUTION_EDGES = Path('graph', 'subgraph', 'solution', FileNames.SOLUTION_EDGES.value)
+PATH_SOLUTION_NODES = Path('graph', 'subgraph', 'solution', FileNames.SOLUTION_NODES.value)
+PATH_TRACKS = Path('graph', 'subgraph', 'tracks', FileNames.TRACKS.value)
 
 class NodeEntries(str, Enum):
     ID = 'node_id'
