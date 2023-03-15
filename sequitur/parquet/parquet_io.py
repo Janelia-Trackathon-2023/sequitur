@@ -14,7 +14,7 @@ ACCEPTED_DTYPES = list[dict[str, Any]] | dict[str, Any] | DataFrame
 
 # TODO we should make sure that edges cannot be written instead of nodes
 
-def write_parquet_df(
+def write_df(
     path: Union[str, Path], 
     dataframe: DataFrame,
     *,
@@ -41,7 +41,7 @@ def write_nodes(
         inferred_type = validate_df(nodes_df)
         
         # write out the nodes to file    
-        write_parquet_df(path / FileNames.NODES.value, nodes_df)
+        write_df(path / FileNames.NODES.value, nodes_df)
     else:
         if isinstance(nodes[0], NodeModel):
             nodes_list = nodes
@@ -70,7 +70,7 @@ def write_edges(
             )
         
         # write out the nodes to file    
-        write_parquet_df(path / FileNames.EDGES, edges_df)
+        write_df(path / FileNames.EDGES, edges_df)
     else:
         if isinstance(edges[0], EdgeModel):
             edges_list = edges
@@ -100,7 +100,7 @@ def _write_parquet_from_list(
         )
 
     # convert to dataframe and write to disk
-    write_parquet_df(path, DataFrame.from_dict(table))
+    write_df(path, DataFrame.from_dict(table))
     
 
 

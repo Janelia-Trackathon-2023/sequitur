@@ -4,7 +4,6 @@ import pytest
 import zarr
 from pandas import DataFrame
 
-from sequitur.parquet.parquet_io import write_parquet_df
 from sequitur.sequitur import SequiturFile
 from sequitur.format import *
 
@@ -61,19 +60,18 @@ def test_existing_nodes_and_edges(tmpdir, example_nodes, example_edges):
     path.mkdir()
 
     # check that a Sequitur file sees no nodes
-    sequ = SequiturFile(path, mode='r')
+    sequ = SequiturFile(path, mode='w')
     assert not sequ.has_nodes
     assert not sequ.has_edges
 
     # create nodes
     path_to_nodes = Path(path, PATH_NODES)
     path_to_nodes.parent.mkdir(parents=True)
-    nodes = DataFrame(example_nodes)
-    write_parquet_df(path_to_nodes, nodes)
-    assert path_to_nodes.exists()
 
-    # check that a Sequitur file sees nodes
-    sequ = SequiturFile(path, mode='r')
+    nodes = DataFrame(example_nodes)
+    sequ.write_nodes(nodes)
+    
+    assert path_to_nodes.exists()
     assert sequ.has_nodes
     assert not sequ.has_edges
 
@@ -84,15 +82,20 @@ def test_existing_nodes_and_edges(tmpdir, example_nodes, example_edges):
     # create edges
     path_to_edges = Path(path, PATH_EDGES)
     path_to_edges.parent.mkdir(parents=True)
-    edges = DataFrame(example_edges)
-    write_parquet_df(path_to_edges, edges)
-    assert path_to_edges.exists()
 
-    # check that a Sequitur file sees edges
-    sequ = SequiturFile(path, mode='r')
+    edges = DataFrame(example_edges)
+    sequ.write_edges(edges)
+
+    assert path_to_edges.exists()
     assert sequ.has_nodes
     assert sequ.has_edges
 
     # read nodes
     read_edges = sequ.read_edges()
     assert read_edges.equals(edges)
+
+    # and that a second file can as well
+    sequ2 = SequiturFile(path, 'r')
+    assert sequ2.read_nodes().equals(read_nodes)
+    assert sequ2.read_edges().equals(read_edges)
+    

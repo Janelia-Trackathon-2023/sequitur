@@ -10,7 +10,7 @@ from numpy import ndarray
 from pandas import DataFrame
 
 from sequitur.format import *
-from sequitur.parquet.parquet_io import read_df
+from sequitur.parquet.parquet_io import read_df, write_df
 
 class SequiturFile:
     
@@ -129,13 +129,15 @@ class SequiturFile:
             pass
 
     # TODO typing
-    def write_nodes(self, nodes) -> None:
+    def write_nodes(self, nodes: DataFrame) -> None:
         if self.mode == 'w':
-            pass
+            write_df(Path(self._path, PATH_NODES), nodes)
+            self._has_nodes = True
 
-    def write_edges(self, edges) -> None:
+    def write_edges(self, edges: DataFrame) -> None:
         if self.mode == 'w':
-            pass
+            write_df(Path(self._path, PATH_EDGES), edges)
+            self._has_edges = True
 
     # TODO typing
     def write_solution(self, nodes, edges) -> None:

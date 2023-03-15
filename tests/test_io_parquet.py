@@ -6,7 +6,7 @@ import pandas as pd
 
 from sequitur.parquet.parquet_io import (
     _read_parquet_df,
-    write_parquet_df
+    write_df
 )
 from sequitur.format import NodeEntries
 
@@ -20,7 +20,7 @@ def test_write_dataframe(my_path, example_edges):
     dataframe = pd.DataFrame(example_edges)
 
     # write file 
-    write_parquet_df(my_path, dataframe)
+    write_df(my_path, dataframe)
 
     # check that it exists
     assert Path(my_path).exists()
@@ -34,7 +34,7 @@ def test_read_dataframe(my_path, example_edges):
     dataframe = pd.DataFrame(example_edges)
 
     # write file 
-    write_parquet_df(my_path, dataframe)
+    write_df(my_path, dataframe)
 
     # load
     read_dataframe = _read_parquet_df(my_path)
